@@ -1,0 +1,747 @@
+{
+  "definitions": {
+    "firstWanPort": {
+      "type": "object",
+      "properties": {
+        "conductor": {
+          "title": "Conductor can be reached from this interface",
+          "type": "boolean",
+          "default": true,
+          "readOnly": true
+        },
+        "dhcpClient": {
+          "title": "Address learned using DHCP",
+          "type": "boolean",
+          "default": true,
+          "readOnly": true
+        }
+      }
+    },
+    "wanPort": {
+      "type": "object",
+      "properties": {
+        "conductor": {
+          "title": "Conductor can be reached from this interface",
+          "type": "boolean",
+          "default": true
+        },
+        "dhcpClient": {
+          "title": "Address learned using DHCP",
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "dependencies": {
+        "dhcpClient": {
+          "oneOf": [
+            {
+              "properties": {
+                "dhcpClient": {
+                  "const": true
+                }
+              }
+            },
+            {
+              "properties": {
+                "dhcpClient": {
+                  "const": false
+                },
+                "address": {
+                  "title": "IP address",
+                  "type": "string",
+                  "description": "Network interface IP address. Example: 128.128.128.2"
+                },
+                "prefix": {
+                  "title": "Prefix",
+                  "type": "string",
+                  "description": "Network prefix length. Example: 24"
+                },
+                "gateway": {
+                  "title": "Gateway",
+                  "type": "string",
+                  "description": "Network gateway IP address. Example: 128.128.128.1"
+                }
+              }
+            }
+          ]
+        },
+        "dhcpServer": {
+          "oneOf": [
+            {
+              "properties": {
+                "dhcpServer": {
+                  "const": true
+                },
+                "dhcpServerStartAddr": {
+                  "title": "DHCP server pool start address",
+                  "type": "string",
+                  "default": "192.168.128.100"
+                },
+                "dhcpServerEndAddr": {
+                  "title": "DHCP server pool end address",
+                  "type": "string",
+                  "default": "192.168.128.254"
+                }
+              }
+            },
+            {
+              "properties": {
+                "dhcpServer": {
+                  "const": false
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "lanPort": {
+      "type": "object",
+      "properties": {
+        "web": {
+          "title": "Management GUI",
+          "description": "Enable web access to the node management GUI using HTTPS.",
+          "type": "boolean",
+          "default": true
+        },
+        "ssh": {
+          "title": "Management SSH",
+          "description": "Enable terminal access to the node management CLI using SSH.",
+          "type": "boolean",
+          "default": true
+        },
+        "dhcpServer": {
+          "title": "DHCP Server",
+          "description": "Enable DHCP server on the interface.",
+          "type": "boolean",
+          "default": true
+        },
+        "vlan": {
+          "title": "VLAN",
+          "description": "Optional VLAN for LAN network.",
+          "type": "number",
+          "minimum": 0,
+          "maximum": 4094,
+          "default": 0
+        }
+      }
+    },
+    "ltePort": {
+      "type": "object",
+      "properties": {
+        "apnName": {
+          "title": "APN",
+          "description": "Enter the LTE access point name.",
+          "type": "string"
+        }
+      }
+    }
+  },
+  "type": "object",
+  "title": "New Branch Router",
+  "description": "Add a new standalone branch router to configuration.",
+  "properties": {
+    "routerName": {
+      "title": "Router Name",
+      "description": "Enter a name identifier for the router.",
+      "type": "string"
+    },
+    "routerDescription": {
+      "title": "Description",
+      "description": "Description for the router",
+      "type": "string"
+    },
+    "routerLocation": {
+      "title": "Site Location",
+      "description": "Enter the address or location of the router. Example: City, State.",
+      "type": "string"
+    },
+    "platformUserInput": {
+      "title": "Platform",
+      "description": "The device that will power the new branch router",
+      "type": "object",
+      "properties": {
+        "device": {
+          "title": "Manufacturer",
+          "description": "Select the manufacturer and model of the device",
+          "enum": [
+            "Juniper SSR120",
+            "Juniper SSR130",
+            "Silicom Madrid 90500-0151-G61",
+            "Lanner 1515-128T"
+          ]
+        }
+      },
+      "dependencies": {
+        "device": {
+          "oneOf": [
+            {
+              "properties": {
+                "device": {
+                  "enum": [
+                    "Silicom Madrid 90500-0151-G61"
+                  ]
+                },
+                "ports": {
+                  "type": "object",
+                  "title": "Ports",
+                  "description": "Port and network settings.",
+                  "properties":{
+                    "wan": {
+                      "type": "object",
+                      "title": "",
+                      "properties": {
+                        "ethernetWanPortCount": {
+                          "title": "Ethernet WAN Ports",
+                          "description": "Select the number of WAN links connected to the device.",
+                          "enum": [
+                            "1","2","3"
+                          ],
+                          "default": "1"
+                        },
+                        "lteUsed": {
+                          "title": "LTE WAN",
+                          "description": "Select if the device uses a LTE WAN link.",
+                          "enum": [
+                            "yes","no"
+                          ],
+                          "default": "no"
+                        }
+                      },
+                      "dependencies":{
+                        "lteUsed": {
+                          "oneOf": [
+                            {
+                              "properties":{
+                                "lteUsed":{
+                                  "enum": ["no"]
+                                }
+                              }
+                            },
+                            {
+                              "properties":{
+                                "lteUsed":{
+                                  "enum": ["yes"]
+                                },
+                                "ltePort":{
+                                  "title": "LTE",
+                                  "description": "LTE interface",
+                                  "$ref": "#/definitions/ltePort"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "ethernetWanPortCount":{
+                          "oneOf": [
+                            {
+                              "properties":{
+                                "ethernetWanPortCount":{
+                                  "enum": ["1"]
+                                },
+                                "wanPorts": {
+                                  "type": "object",
+                                  "title": "",
+                                  "properties": {
+                                    "0": {
+                                      "title": "WAN1",
+                                      "description": "Ethernet port 1 labeled on the device. ",
+                                      "$ref": "#/definitions/firstWanPort"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "properties":{
+                                "ethernetWanPortCount":{
+                                  "enum": ["2"]
+                                },
+                                "wanPorts": {
+                                  "type": "object",
+                                  "title": "",
+                                  "properties": {
+                                    "0": {
+                                      "title": "WAN1",
+                                      "description": "Ethernet port 1 labeled on the device. ",
+                                      "$ref": "#/definitions/firstWanPort"
+                                    },
+                                    "1": {
+                                      "title": "WAN2",
+                                      "description": "Ethernet port 2 labeled on the device. ",
+                                      "$ref": "#/definitions/wanPort"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "properties":{
+                                "ethernetWanPortCount":{
+                                  "enum": ["3"]
+                                },
+                                "wanPorts": {
+                                  "type": "object",
+                                  "title": "",
+                                  "properties": {
+                                    "0": {
+                                      "title": "WAN1",
+                                      "description": "Ethernet port 1 labeled on the device. ",
+                                      "$ref": "#/definitions/firstWanPort"
+                                    },
+                                    "1": {
+                                      "title": "WAN2",
+                                      "description": "Ethernet port 2 labeled on the device. ",
+                                      "$ref": "#/definitions/wanPort"
+                                    },
+                                    "2": {
+                                      "title": "WAN3",
+                                      "description": "Ethernet port 3 labeled on the device.",
+                                      "$ref": "#/definitions/wanPort"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "lanPort": {
+                      "title": "LAN",
+                      "description": "Ethernet port 4 labeled on the device.",
+                      "$ref": "#/definitions/lanPort"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "properties": {
+                "device": {
+                  "enum": [
+                    "Lanner 1515-128T"
+                  ]
+                },
+                "ports": {
+                  "type": "object",
+                  "title": "Ports",
+                  "description": "Port and network settings.",
+                  "properties":{
+                    "wan": {
+                      "type": "object",
+                      "title": "",
+                      "properties": {
+                        "ethernetWanPortCount": {
+                          "title": "Ethernet WAN Ports",
+                          "description": "Select the number of WAN links connected to the device.",
+                          "enum": [
+                            "1","2","3"
+                          ],
+                          "default": "1"
+                        },
+                        "lteUsed": {
+                          "title": "LTE WAN",
+                          "description": "Select if the device uses a LTE WAN link.",
+                          "enum": [
+                            "yes","no"
+                          ],
+                          "default": "no"
+                        }
+                      },
+                      "dependencies":{
+                        "lteUsed": {
+                          "oneOf": [
+                            {
+                              "properties":{
+                                "lteUsed":{
+                                  "enum": ["no"]
+                                }
+                              }
+                            },
+                            {
+                              "properties":{
+                                "lteUsed":{
+                                  "enum": ["yes"]
+                                },
+                                "ltePort":{
+                                  "title": "LTE",
+                                  "description": "LTE interface",
+                                  "$ref": "#/definitions/ltePort"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "ethernetWanPortCount":{
+                          "oneOf": [
+                            {
+                              "properties":{
+                                "ethernetWanPortCount":{
+                                  "enum": ["1"]
+                                },
+                                "wanPorts": {
+                                  "type": "object",
+                                  "title": "",
+                                  "properties": {
+                                    "2": {
+                                      "title": "WAN1",
+                                      "description": "Ethernet port 3 labeled on the device. ",
+                                      "$ref": "#/definitions/firstWanPort"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "properties":{
+                                "ethernetWanPortCount":{
+                                  "enum": ["2"]
+                                },
+                                "wanPorts": {
+                                  "type": "object",
+                                  "title": "",
+                                  "properties": {
+                                    "2": {
+                                      "title": "WAN1",
+                                      "description": "Ethernet port 3 labeled on the device. ",
+                                      "$ref": "#/definitions/firstWanPort"
+                                    },
+                                    "3": {
+                                      "title": "WAN2",
+                                      "description": "Ethernet port 4 labeled on the device. ",
+                                      "$ref": "#/definitions/wanPort"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "properties":{
+                                "ethernetWanPortCount":{
+                                  "enum": ["3"]
+                                },
+                                "wanPorts": {
+                                  "type": "object",
+                                  "title": "",
+                                  "properties": {
+                                    "2": {
+                                      "title": "WAN1",
+                                      "description": "Ethernet port 3 labeled on the device. ",
+                                      "$ref": "#/definitions/firstWanPort"
+                                    },
+                                    "3": {
+                                      "title": "WAN2",
+                                      "description": "Ethernet port 4 labeled on the device. ",
+                                      "$ref": "#/definitions/wanPort"
+                                    },
+                                    "4": {
+                                      "title": "WAN3",
+                                      "description": "Ethernet port 5 labeled on the device.",
+                                      "$ref": "#/definitions/wanPort"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "lanPort": {
+                      "title": "LAN",
+                      "description": "Ethernet port 6 labeled on the device.",
+                      "$ref": "#/definitions/lanPort"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "properties": {
+                "device": {
+                  "enum": [
+                    "Juniper SSR120"
+                  ]
+                },
+                "ports": {
+                  "type": "object",
+                  "title": "Ports",
+                  "description": "Port and network settings.",
+                  "properties":{
+                    "wan": {
+                      "type": "object",
+                      "title": "",
+                      "properties": {
+                        "ethernetWanPortCount": {
+                          "title": "Ethernet WAN Ports",
+                          "description": "Select the number of WAN links connected to the device.",
+                          "enum": [
+                            "1","2","3"
+                          ],
+                          "default": "1"
+                        },
+                        "lteUsed": {
+                          "title": "LTE WAN",
+                          "description": "Select if the device uses a LTE WAN link.",
+                          "enum": [
+                            "yes","no"
+                          ],
+                          "default": "no"
+                        }
+                      },
+                      "dependencies":{
+                        "lteUsed": {
+                          "oneOf": [
+                            {
+                              "properties":{
+                                "lteUsed":{
+                                  "enum": ["no"]
+                                }
+                              }
+                            },
+                            {
+                              "properties":{
+                                "lteUsed":{
+                                  "enum": ["yes"]
+                                },
+                                "ltePort":{
+                                  "title": "LTE",
+                                  "description": "LTE interface",
+                                  "$ref": "#/definitions/ltePort"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "ethernetWanPortCount":{
+                          "oneOf": [
+                            {
+                              "properties":{
+                                "ethernetWanPortCount":{
+                                  "enum": ["1"]
+                                },
+                                "wanPorts": {
+                                  "type": "object",
+                                  "title": "",
+                                  "properties": {
+                                    "0": {
+                                      "title": "WAN1",
+                                      "description": "Ethernet port 0 labeled on the device. ",
+                                      "$ref": "#/definitions/firstWanPort"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "properties":{
+                                "ethernetWanPortCount":{
+                                  "enum": ["2"]
+                                },
+                                "wanPorts": {
+                                  "type": "object",
+                                  "title": "",
+                                  "properties": {
+                                    "0": {
+                                      "title": "WAN1",
+                                      "description": "Ethernet port 0 labeled on the device. ",
+                                      "$ref": "#/definitions/firstWanPort"
+                                    },
+                                    "1": {
+                                      "title": "WAN2",
+                                      "description": "Ethernet port 1 labeled on the device. ",
+                                      "$ref": "#/definitions/wanPort"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "properties":{
+                                "ethernetWanPortCount":{
+                                  "enum": ["3"]
+                                },
+                                "wanPorts": {
+                                  "type": "object",
+                                  "title": "",
+                                  "properties": {
+                                    "0": {
+                                      "title": "WAN1",
+                                      "description": "Ethernet port 0 labeled on the device. ",
+                                      "$ref": "#/definitions/firstWanPort"
+                                    },
+                                    "1": {
+                                      "title": "WAN2",
+                                      "description": "Ethernet port 1 labeled on the device. ",
+                                      "$ref": "#/definitions/wanPort"
+                                    },
+                                    "2": {
+                                      "title": "WAN3",
+                                      "description": "Ethernet port 2 labeled on the device.",
+                                      "$ref": "#/definitions/wanPort"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "lanPort": {
+                      "title": "LAN",
+                      "description": "Ethernet port 3 labeled on the device.",
+                      "$ref": "#/definitions/lanPort"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "properties": {
+                "device": {
+                  "enum": [
+                    "Juniper SSR130"
+                  ]
+                },
+                "ports": {
+                  "type": "object",
+                  "title": "Ports",
+                  "description": "Port and network settings.",
+                  "properties":{
+                    "wan": {
+                      "type": "object",
+                      "title": "",
+                      "properties": {
+                        "ethernetWanPortCount": {
+                          "title": "Ethernet WAN Ports",
+                          "description": "Select the number of WAN links connected to the device.",
+                          "enum": [
+                            "1","2","3"
+                          ],
+                          "default": "1"
+                        },
+                        "lteUsed": {
+                          "title": "LTE WAN",
+                          "description": "Select if the device uses a LTE WAN link.",
+                          "enum": [
+                            "yes","no"
+                          ],
+                          "default": "no"
+                        }
+                      },
+                      "dependencies":{
+                        "lteUsed": {
+                          "oneOf": [
+                            {
+                              "properties":{
+                                "lteUsed":{
+                                  "enum": ["no"]
+                                }
+                              }
+                            },
+                            {
+                              "properties":{
+                                "lteUsed":{
+                                  "enum": ["yes"]
+                                },
+                                "ltePort":{
+                                  "title": "LTE",
+                                  "description": "LTE interface",
+                                  "$ref": "#/definitions/ltePort"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "ethernetWanPortCount":{
+                          "oneOf": [
+                            {
+                              "properties":{
+                                "ethernetWanPortCount":{
+                                  "enum": ["1"]
+                                },
+                                "wanPorts": {
+                                  "type": "object",
+                                  "title": "",
+                                  "properties": {
+                                    "0": {
+                                      "title": "WAN1",
+                                      "description": "Ethernet port 0 labeled on the device. ",
+                                      "$ref": "#/definitions/firstWanPort"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "properties":{
+                                "ethernetWanPortCount":{
+                                  "enum": ["2"]
+                                },
+                                "wanPorts": {
+                                  "type": "object",
+                                  "title": "",
+                                  "properties": {
+                                    "0": {
+                                      "title": "WAN1",
+                                      "description": "Ethernet port 0 labeled on the device. ",
+                                      "$ref": "#/definitions/firstWanPort"
+                                    },
+                                    "1": {
+                                      "title": "WAN2",
+                                      "description": "Ethernet port 1 labeled on the device. ",
+                                      "$ref": "#/definitions/wanPort"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "properties":{
+                                "ethernetWanPortCount":{
+                                  "enum": ["3"]
+                                },
+                                "wanPorts": {
+                                  "type": "object",
+                                  "title": "",
+                                  "properties": {
+                                    "0": {
+                                      "title": "WAN1",
+                                      "description": "Ethernet port 0 labeled on the device. ",
+                                      "$ref": "#/definitions/firstWanPort"
+                                    },
+                                    "1": {
+                                      "title": "WAN2",
+                                      "description": "Ethernet port 1 labeled on the device. ",
+                                      "$ref": "#/definitions/wanPort"
+                                    },
+                                    "2": {
+                                      "title": "WAN3",
+                                      "description": "Ethernet port 2 labeled on the device.",
+                                      "$ref": "#/definitions/wanPort"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "lanPort": {
+                      "title": "LAN",
+                      "description": "Ethernet port 5 labeled on the device.",
+                      "$ref": "#/definitions/lanPort"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}
