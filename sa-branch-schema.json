@@ -168,7 +168,7 @@
             "Juniper SSR120",
             "Juniper SSR130",
             "Silicom Madrid 90500-0151-G61",
-            "Lanner 1515-128T"
+            "Lanner NCA-1515A-128T"
           ]
         }
       },
@@ -320,7 +320,7 @@
               "properties": {
                 "device": {
                   "enum": [
-                    "Lanner 1515-128T"
+                    "Lanner NCA-1515A-128T"
                   ]
                 },
                 "ports": {

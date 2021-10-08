@@ -33,6 +33,6 @@ For each device, below are the ports that will be assigned.
 
 ![Silicom Madrid 90500-0151-G61](https://raw.githubusercontent.com/128technology/interfacemaps/master/img/Silicom%20Madrid%2090500-0151-G61.jpg)
 
-### Lanner 1515-128T
+### Lanner NCA-1515A-128T
 
-![Silicom Madrid 90500-0151-G61](https://raw.githubusercontent.com/128technology/interfacemaps/master/img/Lanner%201515-128T.jpg)
+![Lanner NCA-1515A-128T](https://raw.githubusercontent.com/128technology/interfacemaps/master/img/Lanner%201515-128T.jpg)
