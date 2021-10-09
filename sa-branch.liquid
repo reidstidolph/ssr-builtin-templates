@@ -85,7 +85,7 @@
                   "networkInterface": [
                     {
                       "name": "{{ interfaceMap[manufacturer][model].lte[0].name }}",
-                      "description": "{{ interfaceMap[manufacturer][model].lte[0].bcpNetworkDescription }}",
+                      "description": "{{ interfaceMap[manufacturer][model].lte[0].bcpNetwork.standaloneBranch.description }}",
                       "sourceNat": "true",
                       "management": "false",
                       "defaultRoute": "false",
@@ -189,8 +189,8 @@
                         }
                       ],
                       {% endif %}
-                      "name": "{{ interfaceMap[manufacturer][model].ethernet[i].bcpNetworkName }}",
-                      "description": "{{ interfaceMap[manufacturer][model].ethernet[i].bcpNetworkDescription }}"
+                      "name": "{{ interfaceMap[manufacturer][model].ethernet[i].bcpNetwork.standaloneBranch.name }}",
+                      "description": "{{ interfaceMap[manufacturer][model].ethernet[i].bcpNetwork.standaloneBranch.description }}"
                     }
                   ],
                   {% endif %}
