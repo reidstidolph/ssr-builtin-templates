@@ -16,13 +16,25 @@
     {% assign ethernetPortCount = 6 %}
     {% assign wanPortStart = 0 %}
     {% assign manufacturer = "Juniper" %}
-    {% assign model = "SSR130" %}
+    {% assign model = "SSR120" %}
   
   {% when "Juniper SSR130" %}
     {% assign ethernetPortCount = 8 %}
     {% assign wanPortStart = 0 %}
     {% assign manufacturer = "Juniper" %}
     {% assign model = "SSR130" %}
+
+  {% when "Juniper SSR120-AE/AA" %}
+    {% assign ethernetPortCount = 6 %}
+    {% assign wanPortStart = 0 %}
+    {% assign manufacturer = "Juniper" %}
+    {% assign model = "SSR120-AE" %}
+  
+  {% when "Juniper SSR130-AE/AA" %}
+    {% assign ethernetPortCount = 8 %}
+    {% assign wanPortStart = 0 %}
+    {% assign manufacturer = "Juniper" %}
+    {% assign model = "SSR130-AE" %}
 
 {% endcase %}
 

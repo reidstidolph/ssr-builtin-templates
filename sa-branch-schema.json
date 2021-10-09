@@ -166,7 +166,9 @@
           "description": "Select the manufacturer and model of the device",
           "enum": [
             "Juniper SSR120",
+            "Juniper SSR120-AE/AA",
             "Juniper SSR130",
+            "Juniper SSR130-AE/AA",
             "Silicom Madrid 90500-0151-G61",
             "Lanner NCA-1515A-128T"
           ]
@@ -461,7 +463,7 @@
               "properties": {
                 "device": {
                   "enum": [
-                    "Juniper SSR120"
+                    "Juniper SSR120-AE/AA"
                   ]
                 },
                 "ports": {
@@ -602,7 +604,7 @@
               "properties": {
                 "device": {
                   "enum": [
-                    "Juniper SSR130"
+                    "Juniper SSR130-AE/AA"
                   ]
                 },
                 "ports": {
@@ -655,6 +657,226 @@
                             }
                           ]
                         },
+                        "ethernetWanPortCount":{
+                          "oneOf": [
+                            {
+                              "properties":{
+                                "ethernetWanPortCount":{
+                                  "enum": ["1"]
+                                },
+                                "wanPorts": {
+                                  "type": "object",
+                                  "title": "",
+                                  "properties": {
+                                    "0": {
+                                      "title": "WAN1",
+                                      "description": "Ethernet port 0 labeled on the device. ",
+                                      "$ref": "#/definitions/firstWanPort"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "properties":{
+                                "ethernetWanPortCount":{
+                                  "enum": ["2"]
+                                },
+                                "wanPorts": {
+                                  "type": "object",
+                                  "title": "",
+                                  "properties": {
+                                    "0": {
+                                      "title": "WAN1",
+                                      "description": "Ethernet port 0 labeled on the device. ",
+                                      "$ref": "#/definitions/firstWanPort"
+                                    },
+                                    "1": {
+                                      "title": "WAN2",
+                                      "description": "Ethernet port 1 labeled on the device. ",
+                                      "$ref": "#/definitions/wanPort"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "properties":{
+                                "ethernetWanPortCount":{
+                                  "enum": ["3"]
+                                },
+                                "wanPorts": {
+                                  "type": "object",
+                                  "title": "",
+                                  "properties": {
+                                    "0": {
+                                      "title": "WAN1",
+                                      "description": "Ethernet port 0 labeled on the device. ",
+                                      "$ref": "#/definitions/firstWanPort"
+                                    },
+                                    "1": {
+                                      "title": "WAN2",
+                                      "description": "Ethernet port 1 labeled on the device. ",
+                                      "$ref": "#/definitions/wanPort"
+                                    },
+                                    "2": {
+                                      "title": "WAN3",
+                                      "description": "Ethernet port 2 labeled on the device.",
+                                      "$ref": "#/definitions/wanPort"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "lanPort": {
+                      "title": "LAN",
+                      "description": "Ethernet port 5 labeled on the device.",
+                      "$ref": "#/definitions/lanPort"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "properties": {
+                "device": {
+                  "enum": [
+                    "Juniper SSR120"
+                  ]
+                },
+                "ports": {
+                  "type": "object",
+                  "title": "Ports",
+                  "description": "Port and network settings.",
+                  "properties":{
+                    "wan": {
+                      "type": "object",
+                      "title": "",
+                      "properties": {
+                        "ethernetWanPortCount": {
+                          "title": "Ethernet WAN Ports",
+                          "description": "Select the number of WAN links connected to the device.",
+                          "enum": [
+                            "1","2","3"
+                          ],
+                          "default": "1"
+                        }
+                      },
+                      "dependencies":{
+                        "ethernetWanPortCount":{
+                          "oneOf": [
+                            {
+                              "properties":{
+                                "ethernetWanPortCount":{
+                                  "enum": ["1"]
+                                },
+                                "wanPorts": {
+                                  "type": "object",
+                                  "title": "",
+                                  "properties": {
+                                    "0": {
+                                      "title": "WAN1",
+                                      "description": "Ethernet port 0 labeled on the device. ",
+                                      "$ref": "#/definitions/firstWanPort"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "properties":{
+                                "ethernetWanPortCount":{
+                                  "enum": ["2"]
+                                },
+                                "wanPorts": {
+                                  "type": "object",
+                                  "title": "",
+                                  "properties": {
+                                    "0": {
+                                      "title": "WAN1",
+                                      "description": "Ethernet port 0 labeled on the device. ",
+                                      "$ref": "#/definitions/firstWanPort"
+                                    },
+                                    "1": {
+                                      "title": "WAN2",
+                                      "description": "Ethernet port 1 labeled on the device. ",
+                                      "$ref": "#/definitions/wanPort"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "properties":{
+                                "ethernetWanPortCount":{
+                                  "enum": ["3"]
+                                },
+                                "wanPorts": {
+                                  "type": "object",
+                                  "title": "",
+                                  "properties": {
+                                    "0": {
+                                      "title": "WAN1",
+                                      "description": "Ethernet port 0 labeled on the device. ",
+                                      "$ref": "#/definitions/firstWanPort"
+                                    },
+                                    "1": {
+                                      "title": "WAN2",
+                                      "description": "Ethernet port 1 labeled on the device. ",
+                                      "$ref": "#/definitions/wanPort"
+                                    },
+                                    "2": {
+                                      "title": "WAN3",
+                                      "description": "Ethernet port 2 labeled on the device.",
+                                      "$ref": "#/definitions/wanPort"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "lanPort": {
+                      "title": "LAN",
+                      "description": "Ethernet port 3 labeled on the device.",
+                      "$ref": "#/definitions/lanPort"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "properties": {
+                "device": {
+                  "enum": [
+                    "Juniper SSR130"
+                  ]
+                },
+                "ports": {
+                  "type": "object",
+                  "title": "Ports",
+                  "description": "Port and network settings.",
+                  "properties":{
+                    "wan": {
+                      "type": "object",
+                      "title": "",
+                      "properties": {
+                        "ethernetWanPortCount": {
+                          "title": "Ethernet WAN Ports",
+                          "description": "Select the number of WAN links connected to the device.",
+                          "enum": [
+                            "1","2","3"
+                          ],
+                          "default": "1"
+                        }
+                      },
+                      "dependencies":{
                         "ethernetWanPortCount":{
                           "oneOf": [
                             {
