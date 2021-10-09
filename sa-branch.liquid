@@ -57,6 +57,11 @@
               ]
             }
           ],
+          "applicationIdentification": {
+            "mode": [
+              "all"
+            ]
+          },
           "node": [
             {
               "name": "node1",
@@ -73,11 +78,10 @@
                   },
                   {% if platformUserInput.ports.wan.lteUsed == "yes" %}
                   "enabled": "true",
-                  "forwarding": "true",
                   {% else %}
                   "enabled": "false",
-                  "forwarding": "false",
                   {% endif %}
+                  "forwarding": "true",
                   "networkInterface": [
                     {
                       "name": "{{ interfaceMap[manufacturer][model].lte[0].name }}",
@@ -112,7 +116,7 @@
                       {% if platformUserInput.ports.wan.wanPorts[i].conductor == true %}
                       "conductor": "true",
                       {% endif %}
-                      {% if devPort == "p1" %}
+                      {% if i == wanPortStart %}
                       "management": "true",
                       "defaultRoute": "true",
                       "managementVector": {
