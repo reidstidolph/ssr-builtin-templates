@@ -23,16 +23,16 @@ For each device, below are the ports that will be assigned.
 
 ### Juniper SSR120
 
-![Juniper SSR120](https://raw.githubusercontent.com/128technology/interfacemaps/master/img/Juniper%20SSR120.jpg)
+![Juniper SSR120](https://raw.githubusercontent.com/128technology/interfacemaps/master/img/Juniper/SSR120/standaloneBranch.jpg)
 
 ### Juniper SSR130
 
-![Juniper SSR120](https://raw.githubusercontent.com/128technology/interfacemaps/master/img/Juniper%20SSR130.jpg)
+![Juniper SSR120](https://raw.githubusercontent.com/128technology/interfacemaps/master/img/Juniper/SSR130/standaloneBranch.jpg)
 
 ### Silicom Madrid 90500-0151-G61
 
-![Silicom Madrid 90500-0151-G61](https://raw.githubusercontent.com/128technology/interfacemaps/master/img/Silicom%20Madrid%2090500-0151-G61.jpg)
+![Silicom Madrid 90500-0151-G61](https://raw.githubusercontent.com/128technology/interfacemaps/master/img/Silicom/Madrid%2090500-0151-G61/standaloneBranch.jpg)
 
 ### Lanner NCA-1515A-128T
 
-![Lanner NCA-1515A-128T](https://raw.githubusercontent.com/128technology/interfacemaps/master/img/Lanner%201515-128T.jpg)
+![Lanner NCA-1515A-128T](https://raw.githubusercontent.com/128technology/interfacemaps/master/img/Lanner/NCA-1515A-128T/standaloneBranch.jpg)
