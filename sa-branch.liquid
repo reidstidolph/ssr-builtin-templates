@@ -44,18 +44,36 @@
 {% editgroup %}
 {
   "authority": {
+    "security": [
+      {
+        "name": "internal-encrypt-hmac-disable",
+        "description": "Security policy built by builtin router template",
+        "encrypt": "false",
+        "adaptiveEncryption": "false",
+        "hmacMode": "disabled"
+      }
+    ],
     "router": [
       {
         "_value": {
           "name": "{{routerName}}",
           "description": "{{routerDescription}}",
           "location": "{{routerLocation}}",
-          "interNodeSecurity": "internal",
+          "interNodeSecurity": "internal-encrypt-hmac-disable",
           "system": {
             "ntp": {
               "server": [
                 {
-                  "ipAddress": "pool.ntp.org"
+                  "ipAddress": "216.239.35.0"
+                },
+                {
+                  "ipAddress": "216.239.35.4"
+                },
+                {
+                  "ipAddress": "216.239.35.8"
+                },
+                {
+                  "ipAddress": "216.239.35.12"
                 }
               ]
             }
