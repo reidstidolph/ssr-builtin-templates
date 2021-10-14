@@ -1,0 +1,238 @@
+{% case platformUserInput.device %}
+
+  {% when "Silicom Madrid 90500-0151-G61" %}
+    {% assign ethernetPortCount = 6 %}
+    {% assign wanPortStart = 0 %}
+    {% assign manufacturer = "Silicom" %}
+    {% assign model = "Madrid 90500-0151-G61" %}
+
+  {% when "Lanner NCA-1515A-128T" %}
+    {% assign ethernetPortCount = 8 %}
+    {% assign wanPortStart = 2 %}
+    {% assign manufacturer = "Lanner" %}
+    {% assign model = "NCA-1515A-128T" %}
+
+  {% when "Juniper SSR120" %}
+    {% assign ethernetPortCount = 6 %}
+    {% assign wanPortStart = 0 %}
+    {% assign manufacturer = "Juniper" %}
+    {% assign model = "SSR120" %}
+  
+  {% when "Juniper SSR130" %}
+    {% assign ethernetPortCount = 8 %}
+    {% assign wanPortStart = 0 %}
+    {% assign manufacturer = "Juniper" %}
+    {% assign model = "SSR130" %}
+
+  {% when "Juniper SSR120-AE/AA" %}
+    {% assign ethernetPortCount = 6 %}
+    {% assign wanPortStart = 0 %}
+    {% assign manufacturer = "Juniper" %}
+    {% assign model = "SSR120-AE" %}
+  
+  {% when "Juniper SSR130-AE/AA" %}
+    {% assign ethernetPortCount = 8 %}
+    {% assign wanPortStart = 0 %}
+    {% assign manufacturer = "Juniper" %}
+    {% assign model = "SSR130-AE" %}
+
+{% endcase %}
+
+{% assign portIterator = ethernetPortCount | minus: 1 %}
+{% assign wanPortEnd = platformUserInput.ports.wan.ethernetWanPortCount | plus: wanPortStart %}
+
+{% editgroup %}
+{
+  "authority": {
+    "security": [
+      {
+        "name": "internal-encrypt-hmac-disable",
+        "description": "Security policy built by builtin router template",
+        "encrypt": "false",
+        "adaptiveEncryption": "false",
+        "hmacMode": "disabled"
+      }
+    ],
+    "router": [
+      {
+        "_value": {
+          "name": "{{routerName}}",
+          "description": "{{routerDescription}}",
+          "location": "{{routerLocation}}",
+          "interNodeSecurity": "internal-encrypt-hmac-disable",
+          "system": {
+            "ntp": {
+              "server": [
+                {
+                  "ipAddress": "216.239.35.0"
+                },
+                {
+                  "ipAddress": "216.239.35.4"
+                },
+                {
+                  "ipAddress": "216.239.35.8"
+                },
+                {
+                  "ipAddress": "216.239.35.12"
+                }
+              ]
+            }
+          },
+          "dnsConfig": [
+            {
+              "mode": "static",
+              "address": [
+                "1.1.1.1",
+                "8.8.8.8"
+              ]
+            }
+          ],
+          "applicationIdentification": {
+            "mode": [
+              "all"
+            ]
+          },
+          "node": [
+            {
+              "name": "node1",
+              "role": "combo",
+              "description": "{{ platformUserInput.device }} router node",
+              "deviceInterface": [
+              {% if interfaceMap[manufacturer][model].lte[0] %}
+                {
+                  "name": "{{ interfaceMap[manufacturer][model].lte[0].name }}",
+                  "description": "{{ interfaceMap[manufacturer][model].lte[0].description }}",
+                  "type": "lte",
+                  "lte": {
+                    "apnName": "{{ platformUserInput.ports.wan.ltePort.apnName }}"
+                  },
+                  {% if platformUserInput.ports.wan.lteUsed == "yes" %}
+                  "enabled": "true",
+                  {% else %}
+                  "enabled": "false",
+                  {% endif %}
+                  "forwarding": "true",
+                  "networkInterface": [
+                    {
+                      "name": "{{ interfaceMap[manufacturer][model].lte[0].name }}",
+                      "description": "{{ interfaceMap[manufacturer][model].lte[0].bcpNetwork.standaloneBranch.description }}",
+                      "sourceNat": "true",
+                      "management": "false",
+                      "defaultRoute": "false",
+                      "managementVector": {
+                        "priority": "200",
+                        "name": "mgmt"
+                      },
+                      "dhcp": "v4"
+                    }
+                  ],
+                  "targetInterface": "{{ interfaceMap[manufacturer][model].lte[0].targetInterface }}"
+                },
+              {% endif %}
+              {% for i in (0..portIterator) %}
+                {
+                  "pciAddress": "{{ interfaceMap[manufacturer][model].ethernet[i].pciAddress }}",
+                  "description": "{{ interfaceMap[manufacturer][model].ethernet[i].description }}",
+                  {% if i >= wanPortStart and i < wanPortEnd or interfaceMap[manufacturer][model].ethernet[i].type == "LAN" %}
+                  "enabled": "true",
+                  "forwarding": "true",
+                  {% else %}
+                  "enabled": "false",
+                  "forwarding": "false",
+                  {% endif %}
+                  {% if i >= wanPortStart and i < wanPortEnd or interfaceMap[manufacturer][model].ethernet[i].type == "LAN" %}
+                  "networkInterface": [
+                    {
+                      {% if interfaceMap[manufacturer][model].ethernet[i].type == "WAN" %}
+                      "sourceNat": "true",
+                      {% endif %}
+                      {% if platformUserInput.ports.wan.wanPorts[i].dhcpClient %}
+                      "dhcp": "v4",
+                      {% endif %}
+                      {% if platformUserInput.ports.wan.wanPorts[i].conductor == true %}
+                      "conductor": "true",
+                      {% endif %}
+                      {% if i == wanPortStart %}
+                      "management": "true",
+                      "defaultRoute": "true",
+                      "managementVector": {
+                        "priority": "100",
+                        "name": "mgmt"
+                      },
+                      {% endif %}
+                      {% if interfaceMap[manufacturer][model].ethernet[i].type == "LAN"  %}
+                      "vlan": "{{platformUserInput.ports.lanPort.vlan}}",
+                      "address": [
+                        {
+                          "prefixLength": "24",
+                          {% if platformUserInput.ports.lanPort.web or platformUserInput.ports.lanPort.ssh or platformUserInput.ports.lanPort.dhcpServer %}
+                          "hostService": [
+                            {
+                              "serviceType": "ssh",
+                              "description": "SSH management",
+                              {% if platformUserInput.ports.lanPort.ssh %}
+                              "enabled": "true"
+                              {% else %}
+                              "enabled": "false"
+                              {% endif %}
+                            },
+                            {% if platformUserInput.ports.lanPort.dhcpServer %}
+                            {
+                              "serviceType": "dhcp-server",
+                              "serverName": "{{ routerName }}",
+                              "addressPool": [
+                                {
+                                  "startAddress": "192.168.128.100",
+                                  "endAddress": "192.168.128.200",
+                                  "router": [
+                                    "192.168.128.1"
+                                  ],
+                                  "domainServer": [
+                                    "1.1.1.1",
+                                    "8.8.8.8"
+                                  ]
+                                }
+                              ]
+                            },
+                            {% endif %}
+                            {
+                              "serviceType": "web",
+                              "description": "Web GUI management",
+                              {% if platformUserInput.ports.lanPort.web %}
+                              "enabled": "true"
+                              {% else %}
+                              "enabled": "false"
+                              {% endif %}
+                            }
+                          ],
+                          {% endif %}
+                          "ipAddress": "192.168.128.1"
+                        }
+                      ],
+                      {% endif %}
+                      {% if interfaceMap[manufacturer][model].ethernet[i].type == "WAN" and platformUserInput.ports.wan.wanPorts[i].dhcpClient == false %}
+                      "address": [
+                        {
+                          "prefixLength": "{{ platformUserInput.ports.wan.wanPorts[i].prefix }}",
+                          "gateway": "{{ platformUserInput.ports.wan.wanPorts[i].gateway }}",
+                          "ipAddress": "{{ platformUserInput.ports.wan.wanPorts[i].address }}"
+                        }
+                      ],
+                      {% endif %}
+                      "name": "{{ interfaceMap[manufacturer][model].ethernet[i].bcpNetwork.standaloneBranch.name }}",
+                      "description": "{{ interfaceMap[manufacturer][model].ethernet[i].bcpNetwork.standaloneBranch.description }}"
+                    }
+                  ],
+                  {% endif %}
+                  "name": "{{ interfaceMap[manufacturer][model].ethernet[i].name }}"
+                }{% if forloop.last == true %}{% else %},{% endif %}
+              {% endfor %}
+              ]
+            }
+          ]
+        },
+        "_operation": "create"
+      }
+    ]
+  }
+}

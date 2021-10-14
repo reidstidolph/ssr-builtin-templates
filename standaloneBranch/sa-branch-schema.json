@@ -148,7 +148,7 @@
     },
     "routerDescription": {
       "title": "Description",
-      "description": "Description for the router",
+      "description": "Description for the router.",
       "type": "string"
     },
     "routerLocation": {
@@ -158,12 +158,12 @@
     },
     "platformUserInput": {
       "title": "Platform",
-      "description": "The device that will power the new branch router",
+      "description": "The device that will power the new branch router.",
       "type": "object",
       "properties": {
         "device": {
           "title": "Manufacturer",
-          "description": "Select the manufacturer and model of the device",
+          "description": "Select the manufacturer and model of the device.",
           "enum": [
             "Juniper SSR120",
             "Juniper SSR120-AE/AA",
@@ -227,7 +227,7 @@
                                 },
                                 "ltePort":{
                                   "title": "LTE",
-                                  "description": "LTE interface",
+                                  "description": "LTE interface.",
                                   "$ref": "#/definitions/ltePort"
                                 }
                               }
@@ -247,7 +247,7 @@
                                   "properties": {
                                     "0": {
                                       "title": "WAN1",
-                                      "description": "Ethernet port 1 labeled on the device. ",
+                                      "description": "Ethernet port 1 labeled on the device.",
                                       "$ref": "#/definitions/firstWanPort"
                                     }
                                   }
@@ -265,12 +265,12 @@
                                   "properties": {
                                     "0": {
                                       "title": "WAN1",
-                                      "description": "Ethernet port 1 labeled on the device. ",
+                                      "description": "Ethernet port 1 labeled on the device.",
                                       "$ref": "#/definitions/firstWanPort"
                                     },
                                     "1": {
                                       "title": "WAN2",
-                                      "description": "Ethernet port 2 labeled on the device. ",
+                                      "description": "Ethernet port 2 labeled on the device.",
                                       "$ref": "#/definitions/wanPort"
                                     }
                                   }
@@ -288,12 +288,12 @@
                                   "properties": {
                                     "0": {
                                       "title": "WAN1",
-                                      "description": "Ethernet port 1 labeled on the device. ",
+                                      "description": "Ethernet port 1 labeled on the device.",
                                       "$ref": "#/definitions/firstWanPort"
                                     },
                                     "1": {
                                       "title": "WAN2",
-                                      "description": "Ethernet port 2 labeled on the device. ",
+                                      "description": "Ethernet port 2 labeled on the device.",
                                       "$ref": "#/definitions/wanPort"
                                     },
                                     "2": {
@@ -368,7 +368,7 @@
                                 },
                                 "ltePort":{
                                   "title": "LTE",
-                                  "description": "LTE interface",
+                                  "description": "LTE interface.",
                                   "$ref": "#/definitions/ltePort"
                                 }
                               }
@@ -388,7 +388,7 @@
                                   "properties": {
                                     "2": {
                                       "title": "WAN1",
-                                      "description": "Ethernet port 3 labeled on the device. ",
+                                      "description": "Ethernet port 3 labeled on the device.",
                                       "$ref": "#/definitions/firstWanPort"
                                     }
                                   }
@@ -406,12 +406,12 @@
                                   "properties": {
                                     "2": {
                                       "title": "WAN1",
-                                      "description": "Ethernet port 3 labeled on the device. ",
+                                      "description": "Ethernet port 3 labeled on the device.",
                                       "$ref": "#/definitions/firstWanPort"
                                     },
                                     "3": {
                                       "title": "WAN2",
-                                      "description": "Ethernet port 4 labeled on the device. ",
+                                      "description": "Ethernet port 4 labeled on the device.",
                                       "$ref": "#/definitions/wanPort"
                                     }
                                   }
@@ -429,12 +429,12 @@
                                   "properties": {
                                     "2": {
                                       "title": "WAN1",
-                                      "description": "Ethernet port 3 labeled on the device. ",
+                                      "description": "Ethernet port 3 labeled on the device.",
                                       "$ref": "#/definitions/firstWanPort"
                                     },
                                     "3": {
                                       "title": "WAN2",
-                                      "description": "Ethernet port 4 labeled on the device. ",
+                                      "description": "Ethernet port 4 labeled on the device.",
                                       "$ref": "#/definitions/wanPort"
                                     },
                                     "4": {
@@ -509,7 +509,7 @@
                                 },
                                 "ltePort":{
                                   "title": "LTE",
-                                  "description": "LTE interface",
+                                  "description": "LTE interface.",
                                   "$ref": "#/definitions/ltePort"
                                 }
                               }
@@ -529,7 +529,7 @@
                                   "properties": {
                                     "0": {
                                       "title": "WAN1",
-                                      "description": "Ethernet port 0 labeled on the device. ",
+                                      "description": "Ethernet port 0 labeled on the device.",
                                       "$ref": "#/definitions/firstWanPort"
                                     }
                                   }
@@ -547,12 +547,12 @@
                                   "properties": {
                                     "0": {
                                       "title": "WAN1",
-                                      "description": "Ethernet port 0 labeled on the device. ",
+                                      "description": "Ethernet port 0 labeled on the device.",
                                       "$ref": "#/definitions/firstWanPort"
                                     },
                                     "1": {
                                       "title": "WAN2",
-                                      "description": "Ethernet port 1 labeled on the device. ",
+                                      "description": "Ethernet port 1 labeled on the device.",
                                       "$ref": "#/definitions/wanPort"
                                     }
                                   }
@@ -570,12 +570,12 @@
                                   "properties": {
                                     "0": {
                                       "title": "WAN1",
-                                      "description": "Ethernet port 0 labeled on the device. ",
+                                      "description": "Ethernet port 0 labeled on the device.",
                                       "$ref": "#/definitions/firstWanPort"
                                     },
                                     "1": {
                                       "title": "WAN2",
-                                      "description": "Ethernet port 1 labeled on the device. ",
+                                      "description": "Ethernet port 1 labeled on the device.",
                                       "$ref": "#/definitions/wanPort"
                                     },
                                     "2": {
@@ -650,7 +650,7 @@
                                 },
                                 "ltePort":{
                                   "title": "LTE",
-                                  "description": "LTE interface",
+                                  "description": "LTE interface.",
                                   "$ref": "#/definitions/ltePort"
                                 }
                               }
@@ -670,7 +670,7 @@
                                   "properties": {
                                     "0": {
                                       "title": "WAN1",
-                                      "description": "Ethernet port 0 labeled on the device. ",
+                                      "description": "Ethernet port 0 labeled on the device.",
                                       "$ref": "#/definitions/firstWanPort"
                                     }
                                   }
@@ -688,12 +688,12 @@
                                   "properties": {
                                     "0": {
                                       "title": "WAN1",
-                                      "description": "Ethernet port 0 labeled on the device. ",
+                                      "description": "Ethernet port 0 labeled on the device.",
                                       "$ref": "#/definitions/firstWanPort"
                                     },
                                     "1": {
                                       "title": "WAN2",
-                                      "description": "Ethernet port 1 labeled on the device. ",
+                                      "description": "Ethernet port 1 labeled on the device.",
                                       "$ref": "#/definitions/wanPort"
                                     }
                                   }
@@ -711,12 +711,12 @@
                                   "properties": {
                                     "0": {
                                       "title": "WAN1",
-                                      "description": "Ethernet port 0 labeled on the device. ",
+                                      "description": "Ethernet port 0 labeled on the device.",
                                       "$ref": "#/definitions/firstWanPort"
                                     },
                                     "1": {
                                       "title": "WAN2",
-                                      "description": "Ethernet port 1 labeled on the device. ",
+                                      "description": "Ethernet port 1 labeled on the device.",
                                       "$ref": "#/definitions/wanPort"
                                     },
                                     "2": {
@@ -780,7 +780,7 @@
                                   "properties": {
                                     "0": {
                                       "title": "WAN1",
-                                      "description": "Ethernet port 0 labeled on the device. ",
+                                      "description": "Ethernet port 0 labeled on the device.",
                                       "$ref": "#/definitions/firstWanPort"
                                     }
                                   }
@@ -798,12 +798,12 @@
                                   "properties": {
                                     "0": {
                                       "title": "WAN1",
-                                      "description": "Ethernet port 0 labeled on the device. ",
+                                      "description": "Ethernet port 0 labeled on the device.",
                                       "$ref": "#/definitions/firstWanPort"
                                     },
                                     "1": {
                                       "title": "WAN2",
-                                      "description": "Ethernet port 1 labeled on the device. ",
+                                      "description": "Ethernet port 1 labeled on the device.",
                                       "$ref": "#/definitions/wanPort"
                                     }
                                   }
@@ -821,12 +821,12 @@
                                   "properties": {
                                     "0": {
                                       "title": "WAN1",
-                                      "description": "Ethernet port 0 labeled on the device. ",
+                                      "description": "Ethernet port 0 labeled on the device.",
                                       "$ref": "#/definitions/firstWanPort"
                                     },
                                     "1": {
                                       "title": "WAN2",
-                                      "description": "Ethernet port 1 labeled on the device. ",
+                                      "description": "Ethernet port 1 labeled on the device.",
                                       "$ref": "#/definitions/wanPort"
                                     },
                                     "2": {
@@ -890,7 +890,7 @@
                                   "properties": {
                                     "0": {
                                       "title": "WAN1",
-                                      "description": "Ethernet port 0 labeled on the device. ",
+                                      "description": "Ethernet port 0 labeled on the device.",
                                       "$ref": "#/definitions/firstWanPort"
                                     }
                                   }
@@ -908,12 +908,12 @@
                                   "properties": {
                                     "0": {
                                       "title": "WAN1",
-                                      "description": "Ethernet port 0 labeled on the device. ",
+                                      "description": "Ethernet port 0 labeled on the device.",
                                       "$ref": "#/definitions/firstWanPort"
                                     },
                                     "1": {
                                       "title": "WAN2",
-                                      "description": "Ethernet port 1 labeled on the device. ",
+                                      "description": "Ethernet port 1 labeled on the device.",
                                       "$ref": "#/definitions/wanPort"
                                     }
                                   }
@@ -931,12 +931,12 @@
                                   "properties": {
                                     "0": {
                                       "title": "WAN1",
-                                      "description": "Ethernet port 0 labeled on the device. ",
+                                      "description": "Ethernet port 0 labeled on the device.",
                                       "$ref": "#/definitions/firstWanPort"
                                     },
                                     "1": {
                                       "title": "WAN2",
-                                      "description": "Ethernet port 1 labeled on the device. ",
+                                      "description": "Ethernet port 1 labeled on the device.",
                                       "$ref": "#/definitions/wanPort"
                                     },
                                     "2": {
